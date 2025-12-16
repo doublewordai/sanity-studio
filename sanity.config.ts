@@ -1,7 +1,11 @@
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
+import {presentationTool} from 'sanity/presentation'
+import {markdownSchema} from 'sanity-plugin-markdown/next'
 import {schemaTypes} from './schemaTypes'
+import {resolve} from './presentation/resolve'
+import 'easymde/dist/easymde.min.css'
 
 export default defineConfig({
   name: 'default',
@@ -10,7 +14,23 @@ export default defineConfig({
   projectId: 'g1zo7y59',
   dataset: 'production',
 
-  plugins: [structureTool(), visionTool()],
+  plugins: [
+    structureTool(),
+    visionTool(),
+    markdownSchema(),
+    presentationTool({
+      resolve,
+      previewUrl: {
+        origin: typeof window !== 'undefined' && window.location.hostname === 'localhost'
+          ? 'http://localhost:3000'
+          : 'https://blog.doubleword.ai',
+        preview: '/',
+        draftMode: {
+          enable: '/api/draft-mode/enable',
+        },
+      },
+    }),
+  ],
 
   schema: {
     types: schemaTypes,
