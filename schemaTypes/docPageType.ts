@@ -31,16 +31,8 @@ export default defineType({
     defineField({
       name: 'category',
       title: 'Category',
-      type: 'string',
-      options: {
-        list: [
-          {title: 'Getting Started', value: 'getting-started'},
-          {title: 'Usage', value: 'usage'},
-          {title: 'Reference', value: 'reference'},
-          {title: 'API', value: 'api'},
-          {title: 'Deployment', value: 'deployment'},
-        ],
-      },
+      type: 'reference',
+      to: [{type: 'category'}],
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -61,6 +53,38 @@ export default defineType({
       title: 'Body',
       type: 'markdown',
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'images',
+      title: 'Images',
+      type: 'array',
+      description: 'Images used in this document. Reference them in markdown using the filename.',
+      of: [
+        {
+          type: 'image',
+          fields: [
+            {
+              name: 'filename',
+              type: 'string',
+              title: 'Filename',
+              description: 'Use this name to reference the image in markdown: ![Alt](filename.png)',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Alt text',
+              description: 'Important for accessibility and SEO',
+            },
+            {
+              name: 'caption',
+              type: 'string',
+              title: 'Caption',
+              description: 'Optional caption to display below the image',
+            },
+          ],
+        },
+      ],
     }),
     defineField({
       name: 'sidebarLabel',
@@ -85,14 +109,14 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      subtitle: 'category',
+      category: 'category.name',
       product: 'product.name',
     },
     prepare(selection) {
-      const {title, subtitle, product} = selection
+      const {title, category, product} = selection
       return {
         title: title,
-        subtitle: `${product} - ${subtitle}`,
+        subtitle: `${product} - ${category}`,
       }
     },
   },

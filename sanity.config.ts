@@ -1,10 +1,11 @@
-import {defineConfig} from 'sanity'
-import {structureTool} from 'sanity/structure'
-import {visionTool} from '@sanity/vision'
-import {presentationTool} from 'sanity/presentation'
-import {markdownSchema} from 'sanity-plugin-markdown/next'
-import {schemaTypes} from './schemaTypes'
-import {resolve} from './presentation/resolve'
+import { defineConfig } from 'sanity'
+import { structureTool } from 'sanity/structure'
+import { visionTool } from '@sanity/vision'
+import { presentationTool } from 'sanity/presentation'
+import { markdownSchema } from 'sanity-plugin-markdown/next'
+import { schemaTypes } from './schemaTypes'
+import { resolve } from './presentation/resolve'
+import { media } from 'sanity-plugin-media'
 import 'easymde/dist/easymde.min.css'
 
 export default defineConfig({
@@ -18,6 +19,7 @@ export default defineConfig({
     structureTool(),
     visionTool(),
     markdownSchema(),
+    media(),
     presentationTool({
       resolve,
       previewUrl: {
