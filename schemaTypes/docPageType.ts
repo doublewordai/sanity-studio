@@ -49,10 +49,23 @@ export default defineType({
       description: 'Optional parent page for nested documentation',
     }),
     defineField({
+      name: 'linkedPost',
+      title: 'Linked Blog Post',
+      type: 'reference',
+      to: [{type: 'post'}],
+      description: 'Link to a blog post to transclude its content. When set, the blog post content will be displayed instead of the body field.',
+    }),
+    defineField({
       name: 'body',
       title: 'Body',
       type: 'markdown',
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.custom((body, context) => {
+        const linkedPost = (context.document as any)?.linkedPost
+        if (!body && !linkedPost) {
+          return 'Either body content or a linked post is required'
+        }
+        return true
+      }),
     }),
     defineField({
       name: 'images',

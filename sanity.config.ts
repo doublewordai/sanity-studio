@@ -26,11 +26,15 @@ export default defineConfig({
         origin: typeof window !== 'undefined' && window.location.hostname === 'localhost'
           ? 'http://localhost:3000'
           : 'https://blog.doubleword.ai',
-        preview: '/',
         draftMode: {
           enable: '/api/draft-mode/enable',
         },
       },
+      allowOrigins: [
+        'http://localhost:3000',
+        'https://blog.doubleword.ai',
+        'https://*.vercel.app',
+      ],
     }),
   ],
 

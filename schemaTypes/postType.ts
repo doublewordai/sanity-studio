@@ -50,5 +50,37 @@ export const postType = defineType({
       type: 'markdown',
       description: 'A Github flavored markdown field with image uploading',
     }),
+    defineField({
+      name: 'images',
+      title: 'Images',
+      type: 'array',
+      description: 'Images used in this post. Reference them in markdown using the filename.',
+      of: [
+        {
+          type: 'image',
+          fields: [
+            {
+              name: 'filename',
+              type: 'string',
+              title: 'Filename',
+              description: 'Use this name to reference the image in markdown: ![Alt](filename.png)',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Alt text',
+              description: 'Important for accessibility and SEO',
+            },
+            {
+              name: 'caption',
+              type: 'string',
+              title: 'Caption',
+              description: 'Optional caption to display below the image',
+            },
+          ],
+        },
+      ],
+    }),
   ],
 })
