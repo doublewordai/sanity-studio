@@ -56,13 +56,19 @@ export default defineType({
       description: 'Link to a blog post to transclude its content. When set, the blog post content will be displayed instead of the body field.',
     }),
     defineField({
+      name: 'externalSource',
+      title: 'External Source',
+      type: 'url',
+      description: 'URL to fetch markdown content from (e.g., raw GitHub README). Takes precedence over body.',
+    }),
+    defineField({
       name: 'body',
       title: 'Body',
       type: 'markdown',
       validation: (Rule) => Rule.custom((body, context) => {
-        const linkedPost = (context.document as any)?.linkedPost
-        if (!body && !linkedPost) {
-          return 'Either body content or a linked post is required'
+        const doc = context.document as any
+        if (!body && !doc?.linkedPost && !doc?.externalSource) {
+          return 'Either body content, a linked post, or an external source is required'
         }
         return true
       }),
@@ -110,6 +116,12 @@ export default defineType({
       title: 'Hide Title',
       type: 'boolean',
       description: 'Hide the title on the page',
+    }),
+    defineField({
+      name: 'externalLinkIcon',
+      title: 'External Link Icon',
+      type: 'boolean',
+      description: 'Show external link icon in sidebar (for pages like API Reference)',
     }),
     defineField({
       name: 'description',

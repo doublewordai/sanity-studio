@@ -46,9 +46,26 @@ export const postType = defineType({
       type: 'image',
     }),
     defineField({
+      name: 'externalSource',
+      type: 'url',
+      description: 'URL to fetch markdown content from (e.g., https://fergusfinn.com/blog/my-post/md). When set, body is fetched from this URL at build time.',
+    }),
+    defineField({
+      name: 'description',
+      type: 'text',
+      rows: 3,
+      description: 'Short description for SEO and previews. Required for syndicated posts.',
+    }),
+    defineField({
+      name: 'canonicalUrl',
+      type: 'url',
+      description: 'Original source URL for syndicated content. Used for SEO canonical link.',
+    }),
+    defineField({
       name: 'body',
       type: 'markdown',
       description: 'A Github flavored markdown field with image uploading',
+      hidden: ({ document }) => !!document?.externalSource,
     }),
     defineField({
       name: 'images',
