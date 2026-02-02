@@ -1,6 +1,6 @@
 import {defineLocations, defineDocuments, type PresentationPluginOptions} from 'sanity/presentation'
 
-export const resolve: PresentationPluginOptions['resolve'] = {
+export const resolveBlog: PresentationPluginOptions['resolve'] = {
   mainDocuments: defineDocuments([
     {
       route: '/:slug',
