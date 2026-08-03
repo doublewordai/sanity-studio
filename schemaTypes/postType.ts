@@ -62,6 +62,12 @@ export const postType = defineType({
       description: 'Original source URL for syndicated content. Used for SEO canonical link.',
     }),
     defineField({
+      name: 'ctaUrl',
+      title: 'CTA URL',
+      type: 'url',
+      description: 'Optional exact destination for this post\'s footer CTA. Leave blank to use the standard tracked app URL.',
+    }),
+    defineField({
       name: 'body',
       type: 'markdown',
       description: 'A Github flavored markdown field with image uploading',
